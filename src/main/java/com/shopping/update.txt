@@ -1,0 +1,52 @@
+23.04.11
+
+# application.properties
+spring.jpa.hibernate.ddl-auto=create -> spring.jpa.hibernate.ddl-auto=update
+
+# pom.xml 수정 할 부분 체크 및 라이브러리 설치 및 시행 후
+
+# compile 실행 ( 새로운 프로젝트를 실행할 때마다 시행)
+
+# Qdomain 객체 인식 못 할 때 -> File, Project Structure, Modules -> Sources 확인
+=> Entity 기반으로 Q가 붙는 클래스
+
+23.04.12
+
+# resources -> templates html 문서화
+thymeleafEx 불러오기
+
+# @Getter @Setter @ToString 불러 왔는지 확인 할 것
+ThymeLeafExController 세팅하고 resources -> templates.thymeleafEx에 html 세팅 후
+ShoppingApplication 실행
+
+# pom.xml restart 문장 완성 후 settings 설정
+
+# pom.xml layout 라이브러리 추가
+# 페이지 레이아웃
+first,end.html -> mylayout -> view08 완성
+
+23.04.13 회원가입 및 로그인 기능 구현
+
+# pom.xml
+security 라이브러리 설치
+validation 라이브러리 설치
+
+Dto -> 화면 태그랑 연동
+entity -> 데이터베이스랑 연동
+
+# config package
+# member make class
+
+구현 순서
+Role
+MemberFormDto
+Member
+MemberRepository
+MemberService
+MemberServiceTest
+MemberController
+meInsertForm.html
+MainController
+
+회원가입 session 만들고 MySQL 이랑 연동 및 html 페이지에 보이게 만드는 클래스
+
