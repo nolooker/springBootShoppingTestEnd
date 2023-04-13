@@ -34,16 +34,16 @@ public class Member {
     // 화면에서 넘어오는 dto와 비번 암호화 객체를 이용하여 Member entity 객체 생성하는 메소드
     public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder){
 
-        Member member = new Member() ;
+        Member member = new Member();
 
         member.setName(memberFormDto.getName());
         member.setEmail(memberFormDto.getEmail());
         member.setAddress(memberFormDto.getAddress());
 
-        String password = passwordEncoder.encode(memberFormDto.getPassword()) ;
+        String password = passwordEncoder.encode(memberFormDto.getPassword());
         member.setPassword(password);
 
-        //member.setPassword(memberFormDto.getPassword());
+//        member.setPassword(memberFormDto.getPassword());
 
         member.setRole(Role.USER);
 

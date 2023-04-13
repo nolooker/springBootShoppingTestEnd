@@ -45,8 +45,29 @@ MemberRepository
 MemberService
 MemberServiceTest
 MemberController
-meInsertForm.html
-MainController
+memberForm.html
 
 회원가입 session 만들고 MySQL 이랑 연동 및 html 페이지에 보이게 만드는 클래스
+
+23.04.14 유효성 검사 확인
+
+유효성 검사 check 후 MySQL 저장 // USER, ADMIN 입력
+
+메인 페이지 Controller -> main.html
+
+시큐리티 이용 HttpSecurity 클래스 설정
+
+login/logout 설정 및 구현
+
+# 페이지 권한 설정
+prInsertForm.html
+ProductController
+CustomAuthenticationEntryPoint
+AuthenticationEntryPoint
+SecurityConfig
+Member
+
+
+
+
 

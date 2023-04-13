@@ -4,6 +4,30 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{common/mylayout}">
 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta th:if="${_csrf}" name="_csrf" th:content="${_csrf.token}"/>
+<meta th:if="${_csrf}" name="_csrf_header" th:content="${_csrf.headerName}"/>
+<meta th:if="${_csrf}" name="_csrf_parameter" th:content="${_csrf.parameterName}"/>
+
+<!-- 사용자 정의 css 추가 -->
+<th:block layout:fragment="css">
+    <style>
+        .fieldError{color:red; font-size:13pt;}
+    </style>
+</th:block>
+
+<!-- 사용자 정의 script 추가 -->
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        $(document).ready(function(){
+            var errorMessage = [[${errMessage}]] ;
+            if(errorMessage != null){
+                alert(errorMessage)
+            }
+        });
+    </script>
+</th:block>
+
 <div class="content" layout:fragment="content">
     <form action="" method="post" role="form" th:object="${memberFormDto}">
         <div class="form-group">
