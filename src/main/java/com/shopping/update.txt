@@ -1,5 +1,8 @@
 23.04.11
+<<<<<<<<< Temporary merge branch 1
+=========
 
+>>>>>>>>> Temporary merge branch 2
 # application.properties
 spring.jpa.hibernate.ddl-auto=create -> spring.jpa.hibernate.ddl-auto=update
 
@@ -11,7 +14,10 @@ spring.jpa.hibernate.ddl-auto=create -> spring.jpa.hibernate.ddl-auto=update
 => Entity 기반으로 Q가 붙는 클래스
 
 23.04.12
+<<<<<<<<< Temporary merge branch 1
+=========
 
+>>>>>>>>> Temporary merge branch 2
 # resources -> templates html 문서화
 thymeleafEx 불러오기
 
@@ -25,6 +31,10 @@ ShoppingApplication 실행
 # 페이지 레이아웃
 first,end.html -> mylayout -> view08 완성
 
+<<<<<<<<< Temporary merge branch 1
+
+
+=========
 23.04.13 회원가입 및 로그인 기능 구현
 
 # pom.xml
@@ -45,29 +55,9 @@ MemberRepository
 MemberService
 MemberServiceTest
 MemberController
-memberForm.html
+meInsertForm.html
+MainController
 
 회원가입 session 만들고 MySQL 이랑 연동 및 html 페이지에 보이게 만드는 클래스
-
-23.04.14 유효성 검사 확인
-
-유효성 검사 check 후 MySQL 저장 // USER, ADMIN 입력
-
-메인 페이지 Controller -> main.html
-
-시큐리티 이용 HttpSecurity 클래스 설정
-
-login/logout 설정 및 구현
-
-# 페이지 권한 설정
-prInsertForm.html
-ProductController
-CustomAuthenticationEntryPoint
-AuthenticationEntryPoint
-SecurityConfig
-Member
-
-
-
-
+>>>>>>>>> Temporary merge branch 2
 
