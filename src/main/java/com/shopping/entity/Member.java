@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "members")
 @Getter @Setter @ToString
-public class Member {
+public class Member extends BaseEntity{
 
     @Id
     @Column(name = "id")
