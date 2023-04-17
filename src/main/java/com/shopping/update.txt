@@ -1,8 +1,5 @@
 23.04.11
-<<<<<<<<< Temporary merge branch 1
-=========
 
->>>>>>>>> Temporary merge branch 2
 # application.properties
 spring.jpa.hibernate.ddl-auto=create -> spring.jpa.hibernate.ddl-auto=update
 
@@ -14,10 +11,7 @@ spring.jpa.hibernate.ddl-auto=create -> spring.jpa.hibernate.ddl-auto=update
 => Entity 기반으로 Q가 붙는 클래스
 
 23.04.12
-<<<<<<<<< Temporary merge branch 1
-=========
 
->>>>>>>>> Temporary merge branch 2
 # resources -> templates html 문서화
 thymeleafEx 불러오기
 
@@ -30,9 +24,6 @@ ShoppingApplication 실행
 # pom.xml layout 라이브러리 추가
 # 페이지 레이아웃
 first,end.html -> mylayout -> view08 완성
-
-<<<<<<<<< Temporary merge branch 1
-
 
 =========
 23.04.13 회원가입 및 로그인 기능 구현
@@ -59,5 +50,59 @@ meInsertForm.html
 MainController
 
 회원가입 session 만들고 MySQL 이랑 연동 및 html 페이지에 보이게 만드는 클래스
->>>>>>>>> Temporary merge branch 2
+
+23.04.17 연관 관계 매핑
+#영속성 전이
+#고아 객체 삭제
+#지연 로딩
+
+Member
+Cart
+CartRepository
+CartTest
+
+OrderStatus
+Order
+OrderProduct
+
+OrderRepository
+Order
+EntityMapping
+OrderTestA
+OrderTestB
+OrderProductRepository
+OrderTestC
+
+#Auditing 기능 구현
+AuditorAwareImpl
+AuditCoinfig
+BaseTimeEntity
+BaseEntity
+Member
+MemberTest
+
+AuditorAware
+Authentication
+SecurityContextHolder
+
+23.04.18 상품 등록 및 수정
+
+ProductImage
+
+# pom.xml modelmapper 라이브러리 설치
+
+ProductImageDto -> 유효성 검사
+ProductFormDto -> 이미지
+# ProductController -> addAttribute 똑같은 이름으로 설정해줄것
+prInsertForm.html
+
+ProductImageRepository 설정
+
+# 업로드 및 삭제 서비스
+FileService
+ProductImageService
+ProductService
+
+# 이미지 경로 확인
+WebMvcConfig
 

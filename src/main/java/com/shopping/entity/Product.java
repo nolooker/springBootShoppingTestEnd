@@ -6,12 +6,11 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "products")
 @Getter @Setter @ToString
-public class Product {
+public class Product extends BaseEntity {
 
     @Id
     @Column(name = "product_id")
@@ -34,7 +33,8 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private ProductStatus productStatus ;
 
-    private LocalDateTime regDate ;
-    private LocalDateTime updateDate ;
+//    BaseTimeEntity 상속 받았기 때문에 주석처리
+    // private LocalDateTime regDate ;
+    // private LocalDateTime updateDate ;
 
 }
