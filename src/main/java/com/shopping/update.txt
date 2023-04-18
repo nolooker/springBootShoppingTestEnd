@@ -106,3 +106,18 @@ ProductService
 # 이미지 경로 확인
 WebMvcConfig
 
+23.04.19
+# ProductController 에러 사항 입력 및 수정 추가
+
+# Product updateProduct 메소드 추가
+
+# ProductImage 테이블 명 변경
+
+# ProductImageRepository  List 추가
+
+# ProductImageService  updateProductImage 추가
+
+# ProductService 상품 정보 등록 후 Entity 로 정보 전달
+
+# prUpdateForm.html 상품 수정 html 파일 생성
+

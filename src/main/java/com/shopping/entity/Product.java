@@ -1,6 +1,7 @@
 package com.shopping.entity;
 
 import com.shopping.constant.ProductStatus;
+import com.shopping.dto.ProductFormDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -15,7 +16,7 @@ public class Product extends BaseEntity {
     @Id
     @Column(name = "product_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Integer id ;
+    private Long id ;
 
     @Column(nullable = false, length = 50)
     private String name ;
@@ -36,5 +37,14 @@ public class Product extends BaseEntity {
 //    BaseTimeEntity 상속 받았기 때문에 주석처리
     // private LocalDateTime regDate ;
     // private LocalDateTime updateDate ;
+
+    public void updateProduct(ProductFormDto productFormDto) {
+        this.name = productFormDto.getName() ;
+        this.price = productFormDto.getPrice() ;
+        this.stock = productFormDto.getStock() ;
+        this.description = productFormDto.getDescription() ;
+        this.productStatus = productFormDto.getProductStatus() ;
+
+    }
 
 }

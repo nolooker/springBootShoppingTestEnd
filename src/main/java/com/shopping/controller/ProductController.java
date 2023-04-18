@@ -7,10 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -27,8 +29,7 @@ public class ProductController {
     private final ProductService productService ;
 
     @PostMapping(value = "/admin/products/new")
-    public String productNew
-            (@Valid ProductFormDto dto, BindingResult error, Model model, @RequestParam("productImageFile") List<MultipartFile> uploadedFile){
+    public String productNew(@Valid ProductFormDto dto, BindingResult error, Model model, @RequestParam("productImageFile") List<MultipartFile> uploadedFile){
 
         if (error.hasErrors()) {
             return "/product/prInsertForm" ;
@@ -50,4 +51,48 @@ public class ProductController {
         return "redirect:/" ; // 메인 페이지로 이동
     }
 
+    @GetMapping(value = "/admin/products/{productId}")
+    public String productDetail(@PathVariable("productId") Long productId, Model model) {
+
+        try {
+            ProductFormDto dto = productService.getProductDetail(productId) ;
+            model.addAttribute("productFormDto", dto) ;
+
+        }catch (EntityNotFoundException err) {
+            model.addAttribute("errorMessage", "존재하지 않는 상품입니다.") ;
+            model.addAttribute("productFormDto", new ProductFormDto()) ;
+        }
+
+        return "/product/prUpdateForm" ;
+    }
+
+    @PostMapping(value = "/admin/products/{productId}")
+    public String productUpdate(@Valid ProductFormDto dto, BindingResult error, Model model, @RequestParam("productImageFile") List<MultipartFile> uploadedFile) {
+
+        String whenError = "/product/prUpdateForm" ;
+
+        if (error.hasErrors()) {
+            return whenError ;
+        }
+
+        if (uploadedFile.get(0).isEmpty() && dto.getId() == null) {
+
+            model.addAttribute("errorMessage", "첫 번째 이미지는 필수 입력 사항입니다.") ;
+
+        return whenError ;
+
+        }
+
+        try {
+            productService.updateProduct(dto, uploadedFile) ;
+
+        }catch (Exception err) {
+            model.addAttribute("errorMessage", "상품 수정 중에 오류가 발생하였습니다.") ;
+            err.printStackTrace();
+            return whenError ;
+        }
+
+        return "redirect:/" ; // 메인 페이지로 이동
+
+    }
 }
