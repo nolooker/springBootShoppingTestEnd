@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface ProductRepository extends JpaRepository<Product, Long>, QuerydslPredicateExecutor<Product> {
+public interface ProductRepository extends JpaRepository<Product, Long>, QuerydslPredicateExecutor<Product>, ProductRepositoryCustom {
 
     // 쿼리 메소드 작성
     // 상품의 이름으로 조회하여 목록을 반환받기

@@ -121,3 +121,19 @@ WebMvcConfig
 
 # prUpdateForm.html 상품 수정 html 파일 생성
 
+23.04.20
+
+# prList.html 상품 관리
+
+# ProductService // 검색 조건 및 paging 추가
+
+# ProductRepositoryCustomImpl // 검색 조건 및 기능 구현
+# ProductRepositoryCustom
+
+# ProductRepository  // 상속 받기 추가
+
+# ProductSearchDto  // 객체 생성
+
+# ProductController // value 값 수정
+
+# Maven - Lifecycle - compile 실행 // ReBuild 실행

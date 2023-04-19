@@ -1,8 +1,13 @@
 package com.shopping.controller;
 
 import com.shopping.dto.ProductFormDto;
+import com.shopping.dto.ProductSearchDto;
+import com.shopping.entity.Product;
 import com.shopping.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -51,7 +57,7 @@ public class ProductController {
         return "redirect:/" ; // 메인 페이지로 이동
     }
 
-    @GetMapping(value = "/admin/products/{productId}")
+    @GetMapping(value = "/admin/product/{productId}")
     public String productDetail(@PathVariable("productId") Long productId, Model model) {
 
         try {
@@ -66,7 +72,7 @@ public class ProductController {
         return "/product/prUpdateForm" ;
     }
 
-    @PostMapping(value = "/admin/products/{productId}")
+    @PostMapping(value = "/admin/product/{productId}")
     public String productUpdate(@Valid ProductFormDto dto, BindingResult error, Model model, @RequestParam("productImageFile") List<MultipartFile> uploadedFile) {
 
         String whenError = "/product/prUpdateForm" ;
@@ -93,6 +99,19 @@ public class ProductController {
         }
 
         return "redirect:/" ; // 메인 페이지로 이동
-
     }
+
+    @GetMapping(value = {"/admin/products","/admin/products/{page}"})
+    public String productMange(ProductSearchDto dto, @PathVariable("page") Optional<Integer> page, Model model) {
+
+        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0,3) ;
+        Page<Product> products = productService.getAdminProductPage(dto, pageable) ;
+
+        model.addAttribute("products", products) ;
+        model.addAttribute("searchDto", dto) ; // 검색 조건 유지를 위하여
+        model.addAttribute("maxPage", 5) ; // 하단에 보여줄 최대 페이지 번호
+
+        return "product/prList" ;
+    }
+
 }
