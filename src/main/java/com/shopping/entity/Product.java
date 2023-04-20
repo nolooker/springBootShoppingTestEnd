@@ -2,6 +2,7 @@ package com.shopping.entity;
 
 import com.shopping.constant.ProductStatus;
 import com.shopping.dto.ProductFormDto;
+import com.shopping.exception.OutOfStockException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,7 +15,7 @@ import javax.persistence.*;
 public class Product extends BaseEntity {
 
     @Id
-    @Column(name = "product_id")
+    @Column(name = "products_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id ;
 
@@ -47,4 +48,13 @@ public class Product extends BaseEntity {
 
     }
 
+    // 상품 주문시 재고 수량 감소
+    public void removeStock(int vstock) {
+        int restStock = this.stock - vstock ;
+        if (restStock < 0) { // 재고 부족
+            String message = "상품의 재고가 부족합니다.(현재 재고 수량 : " + this.stock + "개)" ;
+            throw new OutOfStockException(message) ;
+        }
+        this.stock = restStock ;
+    }
 }

@@ -21,7 +21,7 @@ public class ProductImage extends BaseEntity{
     private String repImageYesNo ; // 대표 이미지 여부
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "products_id")
     private Product product ;
 
     public void updateProductImage(String oriImageName, String imageName, String imageUrl) { // 상품 이미지 업로드

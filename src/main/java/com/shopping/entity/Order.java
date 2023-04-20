@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 @Getter @Setter @ToString
-public class Order { // 주문 Entity
+public class Order extends BaseEntity{ // 주문 Entity
 
     @Id
     @Column(name = "order_id")
@@ -34,8 +34,40 @@ public class Order { // 주문 Entity
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus ; // 주문 상태
 
-    private LocalDateTime regDate ; // 작성 일자
+//    private LocalDateTime regDate ; // 작성 일자
 
-    private LocalDateTime updateDate ; // 수정 일자
+//    private LocalDateTime updateDate ; // 수정 일자
 
+    private void addOrderProduct(OrderProduct orderProduct){
+        orderProducts.add(orderProduct) ;
+
+        orderProduct.setOrder(this);
+    }
+
+    public static Order createOrder(Member member, List<OrderProduct> orderProductList) {
+
+        Order order = new Order();
+        order.setMember(member);
+
+        for (OrderProduct bean : orderProductList){
+
+            order.addOrderProduct(bean);
+
+        }
+
+        order.setOrderStatus(OrderStatus.ORDER);
+        order.setOrderDate(LocalDateTime.now());
+
+        return order ;
+    }
+
+    public int getTotalPrice() {
+        int totalPrice = 0;
+
+        for(OrderProduct bean : orderProducts) {
+            totalPrice += bean.getTotalPrice() ;
+        }
+
+        return totalPrice ;
+    }
 }

@@ -15,7 +15,7 @@ public class OrderProduct extends BaseEntity { // 주문 Entity
 
     // fetch = FetchType.LAZY 는 지연 로딩
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "products_id")
     private Product product ;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -27,4 +27,19 @@ public class OrderProduct extends BaseEntity { // 주문 Entity
     // private LocalDateTime regDate ; // 작성 일자
     // private LocalDateTime updateDate ; // 수정 일자
 
+    public static OrderProduct createOrderProduct(Product product, int count) {
+
+        OrderProduct orderProduct = new OrderProduct();
+        orderProduct.setProduct(product);
+        orderProduct.setCount(count);
+        orderProduct.setOrderPrice(product.getPrice());
+
+        product.removeStock(count);
+
+        return orderProduct ;
+    }
+
+    public int getTotalPrice() {  // 해당 상품의 판매 금액
+        return orderPrice * count ;
+    }
 }

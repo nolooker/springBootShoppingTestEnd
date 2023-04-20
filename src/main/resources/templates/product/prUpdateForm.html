@@ -92,7 +92,7 @@
             </select>
         </div>
 
-        <div th:if="${not #lists.isEmpty(productFormDto.productImageDtoList)}">
+
             <div class="form-group" th:each="productImageDto, status: ${productFormDto.productImageDtoList}">
                 <div class="custom-file img-div">
                     <input type="file" class="custom-file-input" name="productImageFile">
@@ -102,7 +102,7 @@
                     <label class="custom-file-label" th:text="${not #strings.isEmpty(productImageDto.oriImageName)} ? ${productImageDto.oriImageName} : ${'상품 이미지'} + ${status.count}"></label>
                 </div>
             </div>
-        </div>
+
 
         <div style="text-align:center" th:if="${not #strings.isEmpty(productFormDto.id)}">
             <button th:formaction="@{'/admin/products/' + ${productFormDto.id}}" type="submit" class="btn btn-primary">상품 수정</button>

@@ -1,5 +1,6 @@
 package com.shopping.service;
 
+import com.shopping.dto.ProductImageDto;
 import com.shopping.entity.ProductImage;
 import com.shopping.repository.ProductImageRepository;
 import lombok.RequiredArgsConstructor;
@@ -59,5 +60,11 @@ public class ProductImageService {
 
             previousImage.updateProductImage(oriImageName, imageName, imageUrl);
         }
+    }
+
+    public ProductImageDto getProductImage(Long id) {
+
+        ProductImageDto dto = ProductImageDto.of(productImageRepository.findById(id).orElseThrow(EntityNotFoundException::new));
+        return dto ;
     }
 }

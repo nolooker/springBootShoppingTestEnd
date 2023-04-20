@@ -1,5 +1,6 @@
 package com.shopping.service;
 
+import com.shopping.dto.MainProductDto;
 import com.shopping.dto.ProductFormDto;
 import com.shopping.dto.ProductImageDto;
 import com.shopping.dto.ProductSearchDto;
@@ -37,9 +38,9 @@ public class ProductService {
             productImage.setProduct(product);
 
             if (i == 0) {
-                productImage.setRepImageYesNo("YES");
+                productImage.setRepImageYesNo("Y");
             }else {
-                productImage.setRepImageYesNo("No");
+                productImage.setRepImageYesNo("N");
             }
 
             productImageService.saveProductImage(productImage, uploadedFile.get(i));
@@ -72,7 +73,7 @@ public class ProductService {
         return dto ;
     }
 
-    public Long updateProduct(ProductFormDto dto, List<MultipartFile> uploadFile) throws Exception {
+    public Long updateProduct(ProductFormDto dto, List<MultipartFile> uploadedFile) throws Exception {
 
         Product product = productRepository.findById(dto.getId()).orElseThrow(EntityNotFoundException::new) ;
 
@@ -82,9 +83,9 @@ public class ProductService {
         // 5 개의 이미지들에 대한 아이디 목록
         List<Long> productImageIds = dto.getProductImageIds() ;
 
-        for (int i = 0; i < uploadFile.size(); i++) {
+        for (int i = 0; i < uploadedFile.size(); i++) {
 
-            productImageService.updateProductImage(productImageIds.get(i), uploadFile.get(i)) ;
+            productImageService.updateProductImage(productImageIds.get(i), uploadedFile.get(i)) ;
 
         }
 
@@ -94,6 +95,11 @@ public class ProductService {
     public Page<Product> getAdminProductPage(ProductSearchDto dto, Pageable pageable) {
         // 상품 검색 조건 dto와 페이징 객체 pageable를 사용해서 페이징 객체를 구함
         return productRepository.getAdminProductPage(dto, pageable) ;
+    }
+
+    public Page<MainProductDto> getMainProductPage(ProductSearchDto dto, Pageable pageable){
+
+        return productRepository.getMainProductPage(dto, pageable) ;
     }
 
 }

@@ -1,8 +1,10 @@
 package com.shopping.controller;
 
 import com.shopping.dto.ProductFormDto;
+import com.shopping.dto.ProductImageDto;
 import com.shopping.dto.ProductSearchDto;
 import com.shopping.entity.Product;
+import com.shopping.service.ProductImageService;
 import com.shopping.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -72,14 +75,27 @@ public class ProductController {
         return "/product/prUpdateForm" ;
     }
 
+    private final ProductImageService productImageService ;
+
     @PostMapping(value = "/admin/product/{productId}")
     public String productUpdate(@Valid ProductFormDto dto, BindingResult error, Model model, @RequestParam("productImageFile") List<MultipartFile> uploadedFile) {
 
         String whenError = "/product/prUpdateForm" ;
 
-        if (error.hasErrors()) {
-            return whenError ;
+        if(error.hasErrors()){
+            List<ProductImageDto> productImageDtoList = new ArrayList<>() ;
+
+            for(Long id : dto.getProductImageIds()){
+                ProductImageDto imageDto = productImageService.getProductImage(id);
+                productImageDtoList.add(imageDto);
+            }
+
+            dto.setProductImageDtoList(productImageDtoList);
+
+            model.addAttribute("productFormDto", dto);
+            return whenError;
         }
+
 
         if (uploadedFile.get(0).isEmpty() && dto.getId() == null) {
 
@@ -112,6 +128,19 @@ public class ProductController {
         model.addAttribute("maxPage", 5) ; // 하단에 보여줄 최대 페이지 번호
 
         return "product/prList" ;
+    }
+
+    @GetMapping(value = "/product/{productId}")
+    // 일반 사용자가 상품을 클릭하여 상세 페이지로 이동
+    public String productDetail(Model model, @PathVariable("productId") Long productId) {
+
+        ProductFormDto dto = productService.getProductDetail(productId) ;
+
+        model.addAttribute("product", dto) ;
+
+
+        return "product/prDetail" ;
+
     }
 
 }
