@@ -5,4 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CartRepository extends JpaRepository<Cart, Long> {
 
+    // 로그인한 회원의 카트 정보를 구해 줍니다.
+    Cart findByMemberId(Long memberId) ;
+
 }

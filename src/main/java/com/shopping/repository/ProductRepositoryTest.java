@@ -28,8 +28,8 @@ public class ProductRepositoryTest {
         product.setRegDate(LocalDateTime.now());
         product.setUpdateDate(LocalDateTime.now());
 
-        Product saveItem = productRepository.save(product) ;
-        System.out.println(saveItem.toString());
+        Product savedItem = productRepository.save(product) ;
+        System.out.println(savedItem.toString());
 
     }
 }

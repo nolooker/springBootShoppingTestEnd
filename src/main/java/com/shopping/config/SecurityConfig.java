@@ -49,6 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     MemberService memberService ;
 
     // AuthenticationManagerBuilder는 AuthenticationManager(인증 관리자) 객체를 생성하는 역할을 준다.
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(memberService).passwordEncoder(passwordEncoder());
@@ -57,6 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean // 객체 생성  PasswordEncoder passwordEncoder = new BCryptPasswordEncoder()
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder() ;
+
     }
 
 }

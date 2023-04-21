@@ -38,7 +38,7 @@ public class Order extends BaseEntity{ // 주문 Entity
 
 //    private LocalDateTime updateDate ; // 수정 일자
 
-    private void addOrderProduct(OrderProduct orderProduct){
+    public void addOrderProduct(OrderProduct orderProduct){
         orderProducts.add(orderProduct) ;
 
         orderProduct.setOrder(this);
@@ -70,4 +70,13 @@ public class Order extends BaseEntity{ // 주문 Entity
 
         return totalPrice ;
     }
+
+    public void cancelOrder () {
+        this.orderStatus = OrderStatus.CANCEL ;
+
+        for (OrderProduct bean : orderProducts) {
+            bean.cancel();
+        }
+    }
+
 }

@@ -42,4 +42,8 @@ public class OrderProduct extends BaseEntity { // 주문 Entity
     public int getTotalPrice() {  // 해당 상품의 판매 금액
         return orderPrice * count ;
     }
+
+    public void cancel(){ // 주문 취소시 재고 상품 다시 + 시키기
+        this.getProduct().addStock(count);
+    }
 }

@@ -23,7 +23,22 @@ public class CartProduct extends BaseEntity{
     private Cart cart ;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "products_id")
     private Product products ;
 
+    public static CartProduct createCartProduct(Cart cart, Product product, int count) {
+
+        CartProduct cartProduct = new CartProduct();
+
+        cartProduct.setCart(cart);
+        cartProduct.setProducts(product);
+        cartProduct.setCount(count);
+
+        return cartProduct ;
+
+    }
+
+    public void addCount(int count) {
+        this.count += count ;
+    }
 }

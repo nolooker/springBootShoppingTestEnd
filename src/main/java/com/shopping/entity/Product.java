@@ -57,4 +57,8 @@ public class Product extends BaseEntity {
         }
         this.stock = restStock ;
     }
+
+    public void addStock(int vstock) {
+        this.stock += vstock ;
+    }
 }

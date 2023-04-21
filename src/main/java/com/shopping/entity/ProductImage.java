@@ -6,7 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Product_images")
+@Table(name = "product_image")
 @Getter @Setter
 public class ProductImage extends BaseEntity{
 
@@ -17,7 +17,7 @@ public class ProductImage extends BaseEntity{
 
     private String imageName ; // 이미지 이름(uuid)
     private String oriImageName ;  // 원본 이미지 이름
-    private String imageUrl ; // 이미지 조화 경로
+    private String imageUrl ; // 이미지 조회 경로
     private String repImageYesNo ; // 대표 이미지 여부
 
     @ManyToOne(fetch = FetchType.LAZY)
