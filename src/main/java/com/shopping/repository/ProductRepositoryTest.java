@@ -1,6 +1,5 @@
 package com.shopping.repository;
 
-
 import com.shopping.constant.ProductStatus;
 import com.shopping.entity.Product;
 import org.junit.jupiter.api.DisplayName;
@@ -20,7 +19,7 @@ public class ProductRepositoryTest {
     public void createProductTest(){
         Product product = new Product();
         product.setProductStatus(ProductStatus.SELL);
-        // product.setId();
+        //product.setId();
         product.setDescription("사과는 참 맛있어요");
         product.setName("사과");
         product.setPrice(1000);
@@ -30,6 +29,5 @@ public class ProductRepositoryTest {
 
         Product savedItem = productRepository.save(product) ;
         System.out.println(savedItem.toString());
-
     }
 }

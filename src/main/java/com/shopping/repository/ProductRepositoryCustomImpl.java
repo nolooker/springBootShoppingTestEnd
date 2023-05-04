@@ -29,13 +29,13 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
 
         QueryResults<MainProductDto> results = this.queryFactory
                 .select(
-                        new QMainProductDto(
-                                product.id,
-                                product.name,
-                                product.description,
-                                productImage.imageUrl,
-                                product.price
-                        )
+                       new QMainProductDto(
+                               product.id,
+                               product.name,
+                               product.description,
+                               productImage.imageUrl,
+                               product.price
+                       )
                 )
                 .from(productImage)
                 .join(productImage.product, product)
@@ -113,5 +113,7 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
     private BooleanExpression sellStatusCondition(ProductStatus productStatus) {
         return productStatus == null ? null : QProduct.product.productStatus.eq(productStatus) ;
     }
+
+
 
 }

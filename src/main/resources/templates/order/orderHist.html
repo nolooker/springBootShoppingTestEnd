@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{common/mylayout}">
 
@@ -18,7 +17,7 @@
             var paramData = {
                 orderId:orderId
             };
-            var param = JSON.stringify(paramData) ;
+            var param = JSON.stringify(paramData);
 
             var token = $('meta[name="_csrf"]').attr('content');
             var header = $('meta[name="_csrf_header"]').attr('content');
@@ -34,20 +33,19 @@
                 dataType:'json',
                 cache:false,
                 success:function(result, status){
-                alert('주문이 취소 되었습니다.');
-                location.href='/orders/' + [[${page}]] ;
+                    alert('주문이 취소 되었습니다.');
+                    location.href='/orders/' + [[${page}]] ;
                 },
                 error:function(xhr, status, error){
-                    if(xhr.status == '401') {
-                        alert('로그인 이후 이용해 주세요.')
-                        location.href='/members.login';
-                    }else {
-                        alert(xhr.responseText) ;
+                    if(xhr.status == '401'){
+                        alert('로그인 이후 이용해 주세요.');
+                        location.href='/members.login' ;
+                    }else{
+                        alert(xhr.responseText);
                     }
                 }
             });
         }
-
     </script>
 </th:block>
 
@@ -82,25 +80,25 @@
             font-size:24px
         }
     </style>
-
 </th:block>
+
 <div class="content" layout:fragment="content">
     <h2>주문 내역 페이지</h2>
 
     <div th:each="order : ${orders.getContent()}">
-
         <div class="align-self-center">
-        <h4 th:text="${order.orderDate} + ' 주문'"></h4>
-        <th:block th:if="${order.orderStatus == T(com.shopping.constant.OrderStatus).ORDER}">
-            <button type="button" class="btn btn-online-secondary" th:value="${order.orderId}" onclick="cancelOrder(this.value)">
-                주문 취소
-            </button>
-        </th:block>
-        <th:block th:unless="${order.orderStatus == T(com.shopping.constant.OrderStatus).ORDER}">
-            <button type="button" class="btn btn-online-secondary" th:value="${order.orderId}">
-                <h4>취소 완료</h4>
-            </button>
-        </th:block>
+            <h4 th:text="${order.orderDate} + ' 주문'"></h4>
+            <th:block th:if="${order.orderStatus == T(com.shopping.constant.OrderStatus).ORDER}">
+                <button type="button" class="btn btn-online-secondary" th:value="${order.orderId}"
+                    onclick="cancelOrder(this.value)">
+                    주문 취소
+                </button>
+            </th:block>
+            <th:block th:unless="${order.orderStatus == T(com.shopping.constant.OrderStatus).ORDER}">
+                <button type="button" class="btn btn-online-secondary" th:value="${order.orderId}">
+                    <h4>취소 완료</h4>
+                </button>
+            </th:block>
         </div>
         <div class="card">
             <div th:each="orderProduct : ${order.orderProductDtoList}">
@@ -136,7 +134,6 @@
                     <span aria-hidden='true'>Next</span>
                 </a>
             </li>
-
         </ul>
     </div>
 

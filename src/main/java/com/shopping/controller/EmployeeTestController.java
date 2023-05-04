@@ -4,7 +4,7 @@ import com.shopping.entity.Employee;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController // EmployeeTestController xxx = new EmployeeTestController()
+@RestController
 public class EmployeeTestController {
     @GetMapping("/employee")
     public Employee test(){
@@ -12,6 +12,6 @@ public class EmployeeTestController {
         bean.setAge(20);
         bean.setId("yusin");
         bean.setName("김유신");
-        return bean;
+        return bean ;
     }
 }

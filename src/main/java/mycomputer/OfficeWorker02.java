@@ -1,7 +1,6 @@
 package mycomputer;
 
 public class OfficeWorker02 {
-
     private String name ;
     private String address ;
 
@@ -17,24 +16,21 @@ public class OfficeWorker02 {
         this.address = address;
         this.computer = new Computer02(); // 객체 생성
 
-        this.computer.setCpu("인텔 cpu");  // setter Injection : 세터를 이용한 테이터 입력(writer) this.computer.setCpu("인텔 cpu");
+        // setter Injection : 세터를 통한 데이터 입력(write)
+        this.computer.setCpu("인텔 cpu"); ;
         this.computer.setHdd("삼성 hdd");
         this.computer.setMainboard("엘지 mainboard");
-
     }
 
     @Override
     public String toString() {
-
         String imsi = "" ;
         imsi += "사원 Infomation\n" ;
         imsi += "name : " + this.name + "\n" ;
-        imsi += "address : " + this.address + "\n" + "\n" ;
+        imsi += "address : " + this.address + "\n\n" ;
 
         imsi += "Computer Infomation\n" ;
         imsi += "" + this.computer.toString() + "\n" ;
-
-        return imsi ;
-
+        return imsi;
     }
 }

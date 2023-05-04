@@ -21,7 +21,6 @@ import javax.persistence.EntityNotFoundException;
 @SpringBootTest
 @Transactional
 public class OrderServiceTest {
-
     @Autowired
     OrderService orderService ;
 
@@ -34,60 +33,59 @@ public class OrderServiceTest {
         Product product = saveProduct() ;
         Member member = saveMember() ;
 
-        OrderDto orderDto = new OrderDto();
-        orderDto.setCount(10) ;
+        OrderDto orderDto = new OrderDto() ;
+        orderDto.setCount(10);
         orderDto.setProductId(product.getId());
 
         Long orderId = orderService.order(orderDto, member.getEmail()) ;
 
-        Order order = orderRepository.findById(orderId).orElseThrow(EntityNotFoundException::new) ;
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(EntityNotFoundException::new);
 
-//        List<OrderProduct> orderProducts = order.getOrderProducts() ;
+        //List<OrderProduct> orderProducts = order.getOrderProducts();
 
         int totalPrice = orderDto.getCount()*product.getPrice() ;
 
-        System.out.println("주문한 상품 총 가격 : " +totalPrice);
-        System.out.println("데이터 베이스 내 상품 가격 : " +order.getTotalPrice());
+        System.out.println("주문한 상품 총 가격 : " + totalPrice);
+        System.out.println("데이터 베이스 내 상품 가격 : " + order.getTotalPrice());
 
     }
 
     @Autowired
-    MemberRepository memberRepository; ;
+    MemberRepository memberRepository ;
 
     private Member saveMember() {
-        Member member = new Member();
-        member.setEmail("qweqwe@naver.com");
-
-        return memberRepository.save(member) ;
+        Member member = new Member() ;
+        member.setEmail("gallon55@naver.com");
+        return memberRepository.save(member);
     }
 
     @Autowired
     ProductRepository productRepository ;
 
     private Product saveProduct() {
-        Product product = new Product();
+        Product product = new Product() ;
         product.setName("남성 구두");
-        product.setPrice(3000);
-        product.setDescription("편하네요");
+        product.setPrice(10000);
+        product.setDescription("신기 편해요");
         product.setProductStatus(ProductStatus.SELL);
         product.setStock(100);
 
-        return productRepository.save(product) ;
+        return productRepository.save(product);
     }
 
     @Test
     @DisplayName("주문 취소 테스트")
-    public void cancelOrder() {
+    public void cancelOrder(){
+        Product product = saveProduct();
 
-        Product product = saveProduct() ;
-
-        OrderDto orderDto = new OrderDto() ;
+        OrderDto orderDto = new OrderDto();
         orderDto.setCount(10);
         orderDto.setProductId(product.getId());
 
-        Member member = saveMember();
+        Member member = saveMember() ;
 
-        Long orderId = orderService.order(orderDto, member.getEmail()); // 주문하기
+        Long orderId = orderService.order(orderDto, member.getEmail()) ; // 주문하기
 
         Order order = orderRepository.findById(orderId).orElseThrow(EntityNotFoundException::new) ;
 
@@ -95,5 +93,6 @@ public class OrderServiceTest {
 
         Assertions.assertEquals(OrderStatus.CANCEL, order.getOrderStatus());
         Assertions.assertEquals(100, product.getStock());
+
     }
 }

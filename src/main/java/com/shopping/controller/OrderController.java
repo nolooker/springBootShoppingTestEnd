@@ -26,61 +26,50 @@ public class OrderController {
     private final OrderService orderService ;
 
     @PostMapping(value = "/order")
-    public @ResponseBody ResponseEntity order(@RequestBody @Valid OrderDto orderDto, BindingResult error, Principal principal) {
-
-            if (error.hasErrors()){
-                StringBuilder sb = new StringBuilder();
-                List<FieldError> fieldErrors = error.getFieldErrors() ;
-
-                for (FieldError ferr : fieldErrors) {
-                    sb.append(ferr.getDefaultMessage()) ;
-                }
-
-                return new ResponseEntity<String>(sb.toString(), HttpStatus.BAD_REQUEST) ;
+    public @ResponseBody ResponseEntity order(@RequestBody @Valid OrderDto orderDto, BindingResult error, Principal principal){
+        if(error.hasErrors()){
+            StringBuilder sb = new StringBuilder() ;
+            List<FieldError> fieldErrors =  error.getFieldErrors();
+            for(FieldError ferr : fieldErrors){
+                sb.append(ferr.getDefaultMessage()) ;
             }
+            return new ResponseEntity<String>(sb.toString(), HttpStatus.BAD_REQUEST);
+        }
+        String email = principal.getName() ;
+        Long orderId = 0L ;
 
-            String email = principal.getName();
-            Long orderId = 0L ;
+        try{
+            orderId = orderService.order(orderDto, email);
 
-            try {
-                orderId = orderService.order(orderDto, email) ;
-
-            }catch (Exception err) {
-                err.printStackTrace();
-                return new ResponseEntity<String>(err.getMessage(), HttpStatus.BAD_REQUEST) ;
-            }
-
-            return new ResponseEntity<Long>(orderId, HttpStatus.OK) ;
-
+        }catch (Exception err){
+            err.printStackTrace();
+            return new ResponseEntity<String>(err.getMessage(), HttpStatus.BAD_REQUEST);
         }
 
-        @GetMapping(value = {"/orders", "/orders/{page}"})
-        public String orderHistory(@PathVariable("page") Optional<Integer> page, Principal principal, Model model) {
-            Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0,2) ;
+        return new ResponseEntity<Long>(orderId, HttpStatus.OK);
+    }
+    @GetMapping(value = {"/orders", "/orders/{page}"})
+    public String orderHist(@PathVariable("page") Optional<Integer> page, Principal principal, Model model){
+        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 2) ;
 
-            Page<OrderHistDto> orderHistDtoPage = orderService.getOrderList(principal.getName(), pageable);
+        Page<OrderHistDto> orderHistDtoPage = orderService.getOrderList(principal.getName(), pageable) ;
 
-            model.addAttribute("orders", orderHistDtoPage) ;
-            model.addAttribute("page", pageable.getPageNumber()) ;
-            model.addAttribute("maxPage", 5) ;
+        model.addAttribute("orders", orderHistDtoPage);
+        model.addAttribute("page", pageable.getPageNumber());
+        model.addAttribute("maxPage", 5);
 
-            return "order/orderHist" ;
-
-        }
-
-        @PostMapping(value = "/order/{orderId}/cancel")
-        public @ResponseBody ResponseEntity cancelOrder(@PathVariable("orderId") Long orderId, Principal principal) {
-
-            String email = principal.getName();
-
-            if (orderService.validateOrder(orderId, email)) {
-                orderService.cancelOrder(orderId);
-                return new ResponseEntity<Long>(orderId, HttpStatus.OK) ;
-
-            }else {
-                return new ResponseEntity<String>("주문 취소 권한이 없습니다.", HttpStatus.FORBIDDEN) ;
-            }
-
-        }
+        return "order/orderHist" ;
     }
 
+    @PostMapping(value = "/order/{orderId}/cancel")
+    public @ResponseBody ResponseEntity cancelOrder(@PathVariable("orderId") Long orderId, Principal principal){
+        String email = principal.getName() ;
+        if(orderService.validateOrder(orderId, email)){
+            orderService.cancelOrder(orderId);
+            return new ResponseEntity<Long>(orderId, HttpStatus.OK) ;
+
+        }else{
+            return new ResponseEntity<String>("주문 취소 권한이 없습니다.", HttpStatus.FORBIDDEN) ;
+        }
+    }
+}

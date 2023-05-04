@@ -15,32 +15,31 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 
 @SpringBootTest
-@Transactional // 테스트 후 데이터 베이스 롤백하게 하는 문구
+@Transactional
 public class CartTest {
-
     @Autowired
     MemberRepository memberRepository ;
-
     @Autowired
     CartRepository cartRepository ;
 
     @PersistenceContext
-    EntityManager em; // Entity 관리자
+    EntityManager em ; //  엔터티 관리자
 
     @Test
     @DisplayName("카트와 회원 매핑 테스트")
-    public void findCartAndMemberTest() {
-        Member member = createMember();  // 카트 소유자
-        memberRepository.save(member);
+    public void findCartAndMemberTest(){
+        Member member = createMember(); // 카트 소유자
+        memberRepository.save(member) ;
 
-        Cart cart = new Cart();
+        Cart cart = new Cart() ;
         cart.setMember(member);
         cartRepository.save(cart);
 
         em.flush();
         em.clear();
 
-        Cart savedCart = cartRepository.findById(cart.getId()).orElseThrow(EntityNotFoundException::new);
+        Cart savedCart = cartRepository.findById(cart.getId())
+                .orElseThrow(EntityNotFoundException::new);
 
         System.out.println(savedCart);
     }
@@ -50,13 +49,11 @@ public class CartTest {
 
     private Member createMember() {
         MemberFormDto dto = new MemberFormDto();
-
         dto.setPassword("1234");
         dto.setAddress("가산동");
         dto.setName("김만식");
         dto.setEmail("aa@naver.com");
 
-        return  Member.createMember(dto, passwordEncoder);
-
+        return Member.createMember(dto, passwordEncoder) ;
     }
 }

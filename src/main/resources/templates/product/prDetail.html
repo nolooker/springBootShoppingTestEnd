@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{common/mylayout}">
 
@@ -9,7 +8,7 @@
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 </head>
 
-<!-- 사용자 정의 css 추가 -->
+<!-- 사용자 정의 CSS 추가 -->
 <th:block layout:fragment="css">
     <style>
         .mgb-15{
@@ -37,7 +36,7 @@
     </style>
 </th:block>
 
-<!-- 사용자 정의 script 추가 -->
+<!-- 사용자 정의 스크립트 추가 -->
 <th:block layout:fragment="script">
     <script th:inline="javascript">
         $(document).ready(function(){
@@ -48,7 +47,7 @@
             });
         });
 
-        function AddComma(num){       /* 3자리마다 콤마 유형 넣기 */
+        function AddComma(num){ /* 3자리마다 콤마 유형 넣기 */
             var regexp = /\B(?=(\d{3})+(?!\d))/g;
             return num.toString().replace(regexp, ',');
         }
@@ -56,18 +55,18 @@
         function calculateTotalPrice(){
             var count = $('#count').val();
             var price = $('#price').val();
-            var totalPrice = price * count ;
+            var totalPrice = price * count  ;
             $('#totalPrice').html(AddComma(totalPrice) + '원');
         }
 
-            function order() {
-            var myurl = '/order' ;
+        function order(){
+            var myurl = '/order';
 
             var paramData = {
                 productId:$('#productId').val(),
                 count:$('#count').val()
             };
-            var param = JSON.stringify(paramData) ;
+            var param = JSON.stringify(paramData);
 
             var token = $('meta[name="_csrf"]').attr('content');
             var header = $('meta[name="_csrf_header"]').attr('content');
@@ -83,28 +82,28 @@
                 dataType:'json',
                 cache:false,
                 success:function(result, status){
-                alert('주문이 완료되었습니다.');
-                location.href='/' ;
+                    alert('주문이 완료되었습니다.');
+                    location.href='/' ;
                 },
                 error:function(xhr, status, error){
-                    if(xhr.status == '401') {
-                        alert('로그인 이후 이용해 주세요.')
-                        location.href='/members/login';
-                    }else {
-                        alert(xhr.responseText) ;
+                    if(xhr.status == '401'){
+                        alert('로그인 이후 이용해 주세요.');
+                        location.href='/members/login' ;
+                    }else{
+                        alert(xhr.responseText);
                     }
                 }
-                });
-            }
+            });
+        }
 
-            function addCart() {
-            var myurl = '/cart' ;
+        function addCart(){
+            var myurl = '/cart';
 
             var paramData = {
                 productId:$('#productId').val(),
                 count:$('#count').val()
             };
-            var param = JSON.stringify(paramData) ;
+            var param = JSON.stringify(paramData);
 
             var token = $('meta[name="_csrf"]').attr('content');
             var header = $('meta[name="_csrf_header"]').attr('content');
@@ -120,36 +119,39 @@
                 dataType:'json',
                 cache:false,
                 success:function(result, status){
-                alert('상품을 장바구니에 담았습니다.');
-                location.href='/' ;
+                    alert('상품을 장바구니에 담았습니다.');
+                    location.href='/' ;
                 },
                 error:function(xhr, status, error){
-                    if(xhr.status == '401') {
-                        alert('로그인 이후 이용해 주세요.')
-                        location.href='/members/login';
-                    }else {
-                        alert(xhr.responseText) ;
+                    if(xhr.status == '401'){
+                        alert('로그인 이후 이용해 주세요.');
+                        location.href='/members/login' ;
+                    }else{
+                        alert(xhr.responseText);
                     }
                 }
-                });
-            }
+            });
+        }
     </script>
 </th:block>
 
 <div class="content" layout:fragment="content">
     <input type="hidden" id="productId" th:value="${product.id}">
     <div class="d-flex">
-        <!--/* 대표 이미지 영역 */-->
+        <!-- /* 대표 이미지 영역  */ -->
         <div class="repImgDiv">
-                <img class="rounded repImg" th:alt="${product.name}" th:src="${product.productImageDtoList[0].imageUrl}">
+            <img class="rounded repImg" th:alt="${product.name}"
+                th:src="${product.productImageDtoList[0].imageUrl}">
         </div>
         <div class="wd50">
-                <span class="badge badge-primary mgb-15" th:if="${product.productStatus == T(com.shopping.constant.ProductStatus).SELL}">
-                    판매중
-                </span>
-                <span class="badge badge-primary mgb-15" th:unless="${product.productStatus == T(com.shopping.constant.ProductStatus).SELL}">
-                    품절
-                </span>
+            <span class="badge badge-primary mgb-15"
+                  th:if="${product.productStatus == T(com.shopping.constant.ProductStatus).SELL}">
+                판매중
+            </span>
+            <span class="badge badge-primary mgb-15"
+                  th:unless="${product.productStatus == T(com.shopping.constant.ProductStatus).SELL}">
+                품절
+            </span>
             <div class="h4" th:text="${product.name}"></div>
             <hr class="my-4">
 
@@ -167,36 +169,37 @@
             </div>
 
             <hr class="my-4">
+
             <div class="text-right mgt-50">
                 <h5>결제 금액</h5>
                 <h3 name="totalPrice" id="totalPrice" class="font-weight-bold"></h3>
             </div>
 
-                <div class="text-right" th:if="${product.productStatus == T(com.shopping.constant.ProductStatus).SELL}">
-                    <button type="button" class="btn btn-light border-primary btn-lg" onclick="addCart()">
-                        장바구니 담기
-                    </button>
-                    <button type="button" class="btn btn-primary btn-lg" onclick="order()">주문</button>
-                </div>
-
-                <div class="text-right" th:unless="${product.productStatus == T(com.shopping.constant.ProductStatus).SELL}">
-                    <button type="button" class="btn btn-danger btn-lg">품절</button>
-                </div>
-
+            <div class="text-right"
+                 th:if="${product.productStatus == T(com.shopping.constant.ProductStatus).SELL}">
+                <button type="button" class="btn btn-light border-primary btn-lg" onclick="addCart()">
+                    장바구니 담기
+                </button>
+                <button type="button" class="btn btn-primary btn-lg" onclick="order()">주문하기</button>
+            </div>
+            <div class="text-right"
+                 th:unless="${product.productStatus == T(com.shopping.constant.ProductStatus).SELL}">
+                <button type="button" class="btn btn-danger btn-lg">품절</button>
+            </div>
         </div>
     </div>
 
-   <div class="jumbotron jumbotron-fluid mgt-30">
-       <div class="container">
-           <h4 class="display-5">상품 상세 설명</h4>
-           <hr class="my-4">
-           <p class="lead" th:text="${product.description}"></p>
-       </div>
-   </div>
-
-    <div class="text-center" th:each="productImage : ${product.productImageDtoList}">
-        <img th:if="${not #strings.isEmpty(productImage.imageUrl)}" th:src="${productImage.imageUrl}" class="rounded mgb-15" width="600" height="450">
+    <div class="jumbotron jumbotron-fluid mgt-30">
+        <div class="container">
+            <h4 class="display-5">상품 상세 설명</h4>
+            <hr class="my-4">
+            <p class="lead" th:text="${product.description}"></p>
+        </div>
     </div>
 
+    <div class="text-center" th:each="productImage : ${product.productImageDtoList}">
+        <img th:if="${not #strings.isEmpty(productImage.imageUrl)}" th:src="${productImage.imageUrl}"
+            class="rounded mgb-15" width="600" height="450">
+    </div>
 </div>
 </html>

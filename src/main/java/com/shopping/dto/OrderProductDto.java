@@ -7,7 +7,6 @@ import lombok.Setter;
 // 주문한 상품 1개에 대한 정보를 저장해주는 클래스
 @Getter @Setter
 public class OrderProductDto {
-
     private String name ;
     private int count ;
     private int orderPrice ;

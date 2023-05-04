@@ -26,10 +26,8 @@ public class OrderHistDto {
         this.orderId = order.getId() ;
 
         String pattern = "yyyy-MM-dd HH:mm" ;
-        this.orderDate = order.getOrderDate().format(DateTimeFormatter.ofPattern(pattern)) ;
+        this.orderDate = order.getOrderDate().format(DateTimeFormatter.ofPattern(pattern));
 
         this.orderStatus = order.getOrderStatus() ;
-
     }
-
 }

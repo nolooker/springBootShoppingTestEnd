@@ -9,25 +9,21 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long>, QuerydslPredicateExecutor<Product>, ProductRepositoryCustom {
-
     // 쿼리 메소드 작성
     // 상품의 이름으로 조회하여 목록을 반환받기
-    List<Product> findProductByName(String name) ;
+    List<Product> findProductByName(String name);
 
     // 특정 가격 이하의 데이터만 조회
-    List<Product> findByPriceLessThan(Integer price) ;
+    List<Product> findByPriceLessThan(Integer price);
 
-    // 특정 가격 이하의 데이터만 조회하고, 가격에 대하여 내림차순 정렬
-    List<Product> findByPriceLessThanOrderByPriceDesc(Integer price) ;
-
+    // 특정 가격 이하의 데이터를 조회하되, 가격에 대하여 내림차순 정렬
+    List<Product> findByPriceLessThanOrderByPriceDesc(Integer price);
 
     @Query("select i from Product i where i.description like " +
-            "%:description% order by i.price desc ")
+          "%:description% order by i.price desc " )
     List<Product> findByProductDetail01(@Param("description") String description);
 
-
     @Query(value = "select * from Products i where i.description like " +
-            "%:description% order by i.price desc ", nativeQuery = true)
+            "%:description% order by i.price desc ", nativeQuery = true )
     List<Product> findByProductDetail02(@Param("description") String description);
-
 }

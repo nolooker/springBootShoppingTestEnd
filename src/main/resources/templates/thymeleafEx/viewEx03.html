@@ -5,26 +5,26 @@
     <title>Title</title>
 </head>
 <body>
-    <h1>상품 리스트 출력하기</h1>
-    <table border="1">
-        <thead>
-        <tr>
-            <td>순번</td>
-            <td>상품명</td>
-            <td>설명</td>
-            <td>가격</td>
-            <td>등록 일자</td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="bean, status: ${beanList}">
-            <td th:text="${status.index}"></td>
-            <td th:text="${bean.name}"></td>
-            <td th:text="${bean.description}"></td>
-            <td th:text="${bean.price}"></td>
-            <td th:text="${bean.regDate}"></td>
-        </tr>
-        </tbody>
-    </table>
+  <h1>상품 리스트 출력 하기</h1>
+  <table border="1">
+    <thead>
+    <tr>
+      <td>순번</td>
+      <td>상품명</td>
+      <td>설명</td>
+      <td>가격</td>
+      <td>등록 일자</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="bean, status: ${beanList}">
+      <td th:text="${status.index}"></td>
+      <td th:text="${bean.name}"></td>
+      <td th:text="${bean.description}"></td>
+      <td th:text="${bean.price}"></td>
+      <td th:text="${bean.regDate}"></td>
+    </tr>
+    </tbody>
+  </table>
 </body>
 </html>

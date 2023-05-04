@@ -10,7 +10,6 @@ import javax.persistence.EntityNotFoundException;
 @SpringBootTest
 @Transactional
 public class OrderTestA extends EntityMapping{
-
     @Test
     @DisplayName("영속성 전이 테스트")
     public void cascadeTest(){
@@ -21,26 +20,29 @@ public class OrderTestA extends EntityMapping{
             Product product = super.createProduct(); // 개별 상품
             productRepository.save(product) ;
 
-            OrderProduct orderProduct = new OrderProduct() ;
-
+            OrderProduct orderProduct = new OrderProduct();
             orderProduct.setProduct(product);
             orderProduct.setCount(10);
             orderProduct.setOrderPrice(1000);
             orderProduct.setOrder(order);
 
-            order.getOrderProducts().add(orderProduct);
-
+            order.getOrderProducts().add(orderProduct) ;
         }
 
-        orderRepository.saveAndFlush(order);
+        orderRepository.saveAndFlush(order) ;
         em.clear();
 
-        System.out.println("송장 번호 : " + order.getId());
+        System.out.println("송장 번호 : " + order.getId() );
+
         // savedOrder : 데이터 베이스에 저장된 주문 정보를 담고 있는 객체
-        Order savedOrder = orderRepository.findById(order.getId()).orElseThrow(EntityNotFoundException::new) ;
+        Order savedOrder = orderRepository.findById(order.getId())
+                .orElseThrow(EntityNotFoundException::new);
 
         System.out.println("savedOrder");
         System.out.println(savedOrder);
-
     }
 }
+
+
+
+

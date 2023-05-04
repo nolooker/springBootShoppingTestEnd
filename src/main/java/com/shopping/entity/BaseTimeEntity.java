@@ -1,5 +1,6 @@
 package com.shopping.entity;
 
+
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
@@ -15,12 +16,10 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @Getter @Setter
 public abstract class BaseTimeEntity {
-
-    @CreatedDate // Entity 생성시 자동으로 시간 기록
-    @Column(updatable = false) // Entity 수정시 나는 갱신 안 한다.
+    @CreatedDate // 엔터티 생성시 자동으로 시간을 기록하겠습니다.
+    @Column(updatable = false) // Entity 수정시 나는 갱신 안 할래요
     private LocalDateTime regDate ;
 
-    @LastModifiedDate // Entity 수정시 자동으로 시간을 기록
+    @LastModifiedDate  // 엔터티 수정시 자동으로 시간을 기록하겠습니다.
     private LocalDateTime updateDate ;
-
 }

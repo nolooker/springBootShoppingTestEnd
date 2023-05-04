@@ -6,13 +6,8 @@ import lombok.Setter;
 
 @Getter @Setter
 public class ProductSearchDto {
-
-    private String searchDateType ;
-
+    private String searchDateType;
     private ProductStatus productStatus ;
-
-    private String searchBy ;
-
-    private String searchQuery ;
-
+    private String searchBy;
+    private String searchQuery;
 }

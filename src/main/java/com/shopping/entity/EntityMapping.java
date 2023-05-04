@@ -12,22 +12,17 @@ import javax.persistence.PersistenceContext;
 import java.time.LocalDateTime;
 
 public class EntityMapping {
-
     @Autowired
     ProductRepository productRepository ;
-
     @Autowired
     OrderRepository orderRepository ;
-
     @PersistenceContext
     EntityManager em ;
-
     @Autowired
     OrderProductRepository orderProductRepository ;
 
     protected Product createProduct() {
-        Product product = new Product();
-
+        Product product = new Product() ;
         product.setName("블루베리");
         product.setPrice(10000);
         product.setDescription("맛있어요");
@@ -44,10 +39,9 @@ public class EntityMapping {
 
     protected Order createOrder() {
         Order order = new Order() ;
-
-        for (int i = 0; i < 3; i++) {
-            Product product = this.createProduct() ;
-            productRepository.save(product);
+        for (int i = 0; i < 3 ; i++) {
+            Product product = this.createProduct();
+            productRepository.save(product) ;
 
             OrderProduct orderProduct = new OrderProduct() ;
 
@@ -56,14 +50,14 @@ public class EntityMapping {
             orderProduct.setOrderPrice(1000);
             orderProduct.setOrder(order);
 
-            order.getOrderProducts().add(orderProduct);
+            order.getOrderProducts().add(orderProduct) ;
         }
 
-        Member member = new Member();
+        Member member = new Member() ;
         memberRepository.save(member) ;
 
         order.setMember(member);
-        orderRepository.save(order);
+        orderRepository.save(order) ;
 
         return order ;
     }

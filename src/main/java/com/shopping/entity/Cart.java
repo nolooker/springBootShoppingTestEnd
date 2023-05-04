@@ -9,8 +9,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "carts")
 @Getter @Setter @ToString
-public class Cart extends BaseEntity {
-
+public class Cart extends BaseEntity{
     @Id
     @Column(name = "cart_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,10 +19,18 @@ public class Cart extends BaseEntity {
     @JoinColumn(name = "id")
     private Member member ;
 
-    public static Cart createCart(Member member) {
-        Cart cart = new Cart();
-        cart.setMember(member);
+    public static Cart createCart(Member mebmer){
+        Cart cart = new Cart() ;
+        cart.setMember(mebmer);
         return cart ;
     }
 
 }
+
+
+
+
+
+
+
+

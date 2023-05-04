@@ -19,7 +19,6 @@ public class ProductImageService {
     @Value("${productImageLocation}")
     private String productImageLocation ; // 상품 이미지가 업로드 되는 경로
 
-
     private final ProductImageRepository productImageRepository ;
     private final FileService fileService ;
 
@@ -32,11 +31,10 @@ public class ProductImageService {
         System.out.println("productImageLocation : " + productImageLocation);
 
         // 파일 업로드
-        if (!StringUtils.isEmpty(oriImageName)){  // 이름이 있으면 업로드 해
+        if(!StringUtils.isEmpty(oriImageName)){ // 이름이 있으면 업로드 하자
             imageName = fileService.uploadFile(productImageLocation, oriImageName, uploadedFile.getBytes()) ;
             imageUrl = "/images/product/" + imageName ;
             System.out.println("imageUrl : " + imageUrl);
-
         }
 
         productImage.updateProductImage(oriImageName, imageName, imageUrl);
@@ -44,26 +42,24 @@ public class ProductImageService {
     }
 
     public void updateProductImage(Long productImageId, MultipartFile uploadedFile) throws Exception{
+        if(!uploadedFile.isEmpty()){ // 업로드할 이미지가 있으면
+            ProductImage previousImage = productImageRepository.findById(productImageId)
+                    .orElseThrow(EntityNotFoundException::new) ;
 
-        if (!uploadedFile.isEmpty()) { // 업로드할 이미지가 있으면
-
-            ProductImage previousImage = productImageRepository.findById(productImageId).orElseThrow(EntityNotFoundException::new) ;
-
-            if (!StringUtils.isEmpty(previousImage.getImageName())) {
+            if(!StringUtils.isEmpty(previousImage.getImageName())){
                 fileService.deleteFile(productImageLocation + "/" + previousImage.getImageName());
             }
 
             String oriImageName = uploadedFile.getOriginalFilename() ;
             String imageName = fileService.uploadFile(productImageLocation, oriImageName, uploadedFile.getBytes()) ;
 
-            String imageUrl = "/images/product/" +imageName ;
+            String imageUrl = "/images/product/" + imageName;
 
             previousImage.updateProductImage(oriImageName, imageName, imageUrl);
         }
     }
 
     public ProductImageDto getProductImage(Long id) {
-
         ProductImageDto dto = ProductImageDto.of(productImageRepository.findById(id).orElseThrow(EntityNotFoundException::new));
         return dto ;
     }

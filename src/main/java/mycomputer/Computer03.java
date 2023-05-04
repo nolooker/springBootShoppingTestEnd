@@ -4,7 +4,6 @@ import lombok.Setter;
 
 @Setter
 public class Computer03 {
-    
     private String cpu ;
     private String hdd ;
     private String mainboard ;
@@ -12,11 +11,9 @@ public class Computer03 {
     @Override
     public String toString() {
         String imsi = "" ;
-
         imsi += "cpu info : " + this.cpu + "\n" ;
         imsi += "hdd info : " + this.hdd + "\n" ;
         imsi += "mainboard info : " + this.mainboard + "\n" ;
-
         return imsi ;
     }
 }

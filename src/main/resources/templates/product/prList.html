@@ -5,8 +5,7 @@
 
 <!-- 사용자 스크립트 추가 -->
 <th:block layout:fragment="script">
-  <script th:inline="javascript">
-
+    <script th:inline="javascript">
         $(document).ready(function(){ /* 검색 button click */
             $("#searchBtn").on("click",function(e) {
                 e.preventDefault();
@@ -31,7 +30,7 @@
 
 <!-- 사용자 CSS 추가 -->
 <th:block layout:fragment="css">
-  <style>
+    <style>
         select{
             margin-right:10px;
         }
@@ -39,75 +38,72 @@
 </th:block>
 
 <div class="content" layout:fragment="content">
-  <form th:action="@{'/admin/products/' + ${products.number}}" role="form" method="get" th:object="${products}">
-    <!-- /* 데이터 목록 */ -->
-    <table class="table">
-      <thead>
-      <tr>
-        <td>상품 아이디</td>
-        <td>상품명</td>
-        <td>상태</td>
-        <td>등록자</td>
-        <td>등록일</td>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each="bean, status: ${products.getContent()}">  <!--ProductController에서 products 연동-->
-        <td th:text="${bean.id}"></td>
+    <form th:action="@{'/admin/products/' + ${products.number}}" role="form"
+          method="get" th:object="${products}">
+        <!-- /* 데이터 목록  */ -->
+        <table class="table">
+            <thead>
+            <tr>
+                <td>상품 아이디</td>
+                <td>상품명</td>
+                <td>상태</td>
+                <td>등록자</td>
+                <td>등록일</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="bean, status: ${products.getContent()}">
+                <td th:text="${bean.id}"></td>
+                <td>
+                    <a th:href="'/admin/products/'+${bean.id}" th:text="${bean.name}"></a>
+                </td>
+                <td th:text="${bean.productStatus == T(com.shopping.constant.ProductStatus).SELL ? '판매중' : '품절'}"></td>
+                <td th:text="${bean.createdBy}"></td>
+                <td th:text="${bean.regDate}"></td>
+            </tr>
+            </tbody>
+        </table>
 
-        <td>
-          <a th:href="'/admin/products/'+${bean.id}" th:text="${bean.name}"></a>
-        </td>
+        <!-- /* 페이지 네이션 */ -->
+        <div th:with="start=${(products.number/maxPage)*maxPage + 1}, end=(${(products.totalPages == 0) ? 1 : (start + (maxPage - 1) < products.totalPages ? start + (maxPage - 1) : products.totalPages)})" >
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:classappend="${products.first}?'disabled'">
+                    <a th:onclick="'javascript:page(' + ${products.number - 1} + ')'" aria-label='Previous' class="page-link">
+                        <span aria-hidden='true'>Previous</span>
+                    </a>
+                </li>
+                <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${products.number eq page-1}?'active':''">
+                    <a th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text" class="page-link">[[${page}]]</a>
+                </li>
+                <li class="page-item" th:classappend="${products.last}?'disabled'">
+                    <a th:onclick="'javascript:page(' + ${products.number + 1} + ')'" aria-label='Next' class="page-link">
+                        <span aria-hidden='true'>Next</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
 
-        <td th:text="${bean.productStatus == T(com.shopping.constant.ProductStatus).SELL ? '판매중' : '품절'}"></td>
-
-        <td th:text="${bean.createdBy}"></td>
-        <td th:text="${bean.regDate}"></td>
-      </tr>
-      </tbody>
-    </table>
-
-    <!-- /* 페이지 네이션 */ -->
-    <div th:with="start=${(products.number/maxPage)*maxPage + 1}, end=(${(products.totalPages == 0) ? 1 : (start + (maxPage - 1) < products.totalPages ? start + (maxPage - 1) : products.totalPages)})" >
-      <ul class="pagination justify-content-center">
-        <li class="page-item" th:classappend="${products.first}?'disabled'">
-          <a th:onclick="'javascript:page(' + ${products.number - 1} + ')'" aria-label='Previous' class="page-link">
-            <span aria-hidden='true'>Previous</span>
-          </a>
-        </li>
-        <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${products.number eq page-1}?'active':''">
-          <a th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text" class="page-link">[[${page}]]</a>
-        </li>
-        <li class="page-item" th:classappend="${products.last}?'disabled'">
-          <a th:onclick="'javascript:page(' + ${products.number + 1} + ')'" aria-label='Next' class="page-link">
-            <span aria-hidden='true'>Next</span>
-          </a>
-        </li>
-      </ul>
-    </div>
-
-    <!-- /* 필드 검색 */ -->
-    <div class="form-inline justify-content-center" th:object="${searchDto}">
-        <select th:field="*{searchDateType}" class="form-control" style="width:auto;">
-          <option value="all">전체기간</option>
-          <option value="1d">1일</option>
-          <option value="1w">1주</option>
-          <option value="1m">1달</option>
-          <option value="6m">6달</option>
-        </select>
-        <select th:field="*{productStatus}" class="form-control" style="width:auto;">
-          <option value="">전체 보기</option>
-          <option value="SELL">판매</option>
-          <option value="SOLD_OUT">품절</option>
-        </select>
-        <select th:field="*{searchBy}" class="form-control" style="width:auto;">
-          <option value="name">상품명</option>
-          <option value="createdBy">등록자</option>
-        </select>
-      <input th:field="*{searchQuery}" class="form-control" type="text" placeholder="검색어를 입력해 주세요.">
-      <button id="searchBtn" type="submit" class="btn btn-primary">검색</button>
-    </div>
-
-  </form>
+        <!-- /* 필드 검색 */ -->
+        <div class="form-inline justify-content-center" th:object="${searchDto}">
+            <select th:field="*{searchDateType}" class="form-control" style="width:auto;">
+                <option value="all">전체 기간</option>
+                <option value="1d">1일</option>
+                <option value="1w">1주</option>
+                <option value="1m">1달</option>
+                <option value="6m">6달</option>
+            </select>
+            <select th:field="*{productStatus}" class="form-control" style="width:auto;">
+                <option value="">전체 보기</option>
+                <option value="SELL">판매</option>
+                <option value="SOLD_OUT">품절</option>
+            </select>
+            <select th:field="*{searchBy}" class="form-control" style="width:auto;">
+                <option value="name">상품명</option>
+                <option value="createdBy">등록자</option>
+            </select>
+            <input th:field="*{searchQuery}" class="form-control" type="text" placeholder="검색어를 입력해 주세요.">
+            <button id="searchBtn" type="submit" class="btn btn-primary">검색</button>
+        </div>
+    </form>
 </div>
 </html>

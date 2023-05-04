@@ -10,7 +10,6 @@ import javax.persistence.*;
 @Table(name = "cart_products")
 @Getter @Setter @ToString
 public class CartProduct extends BaseEntity{
-
     @Id
     @Column(name = "cart_product_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,23 +25,21 @@ public class CartProduct extends BaseEntity{
     @JoinColumn(name = "products_id")
     private Product products ;
 
-    public static CartProduct createCartProduct(Cart cart, Product product, int count) {
-
+    public static CartProduct createCartProduct(Cart cart, Product product, int count){
         CartProduct cartProduct = new CartProduct();
-
         cartProduct.setCart(cart);
         cartProduct.setProducts(product);
         cartProduct.setCount(count);
 
         return cartProduct ;
-
     }
 
-    public void addCount(int count) {
+    public void addCount(int count){
         this.count += count ;
     }
 
-    public void updateCount(int count) {  // 수량 덮어쓰기 개념
+    public void updateCount(int count){
         this.count = count ;
     }
+
 }
