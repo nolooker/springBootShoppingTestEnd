@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/mylayout}">
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+    </script>
+</th:block>
+
+<!-- 사용자 정의 css 추가 -->
+<th:block layout:fragment="css">
+    <style>
+        .input-group{margin-bottom:15px;}
+        .fieldError{color:red; font-size:13pt;}
+        .img-div{margin-bottom:10px;}
+    </style>
+</th:block>
+
+<div class="content" layout:fragment="content">
+    <form action="" method="post" role="form" th:object="${board}">
+        <p class="h2">
+            게시물 등록
+        </p>
+
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">작성자</span>
+            </div>
+            <input type="text" th:field="*{writer}" class="form-control" placeholder="작성자를 입력해주세요.">
+        </div>
+        <p th:if="${#fields.hasErrors('writer')}" th:errors="*{writer}" class="fieldError">Invalid Data</p>
+
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">글 제목</span>
+            </div>
+            <input type="text" th:field="*{subject}" class="form-control" placeholder="글 제목을 입력해주세요.">
+        </div>
+        <p th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}" class="fieldError">Invalid Data</p>
+
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">글 내용</span>
+            </div>
+            <input type="text" th:field="*{description}" class="form-control" placeholder="글 내용을 입력해주세요.">
+        </div>
+        <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="fieldError">Invalid Data</p>
+
+        <div style="text-align:center" >
+            <button th:formaction="@{/board/insert}" type="submit" class="btn btn-primary">게시물 등록</button>
+        </div>
+
+    </form>
+</div>
+</html>

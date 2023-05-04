@@ -41,4 +41,8 @@ public class CartProduct extends BaseEntity{
     public void addCount(int count) {
         this.count += count ;
     }
+
+    public void updateCount(int count) {  // 수량 덮어쓰기 개념
+        this.count = count ;
+    }
 }

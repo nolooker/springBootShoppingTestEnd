@@ -14,7 +14,7 @@ public class ProductImageDto {
 
     private String oriImageName ;  // 원본 이미지 이름
 
-    private String imageUrl ; // 이미지 조화 경로
+    private String imageUrl ; // 이미지 조회 경로
 
     private String repImageYesNo ; // 대표 이미지 여부
 

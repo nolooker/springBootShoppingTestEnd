@@ -28,7 +28,7 @@ public class MemberServiceTest {
         dto.setName("김김김");
         dto.setAddress("금천구 가산동");
         dto.setPassword("1234");
-        return Member.createMember(dto, null);
+        return Member.createMember(dto, passwordEncoder);
     }
 
     @Test

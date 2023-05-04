@@ -39,7 +39,6 @@ public class ProductFormDto {
 
     private static ModelMapper modelMapper = new ModelMapper() ;
 
-
     public static ProductFormDto of(Product product) {
         return modelMapper.map(product, ProductFormDto.class) ;
     }

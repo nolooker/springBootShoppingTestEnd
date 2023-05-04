@@ -94,6 +94,29 @@ public class OrderService {
         } else {
             return false ;
         }
+    }
+
+    // 장바구니에서 주문할 상품 데이터를 전달 받아서 주문을 생성하는 로직을 구현합니다.
+    public Long orders(List<OrderDto> orderDtoList, String email){
+        // orderDtoList : 상품 아이디와 수량을 가지고 있는 객체들의 모음
+
+        Member member = memberRepository.findByEmail(email) ;
+
+        List<OrderProduct> orderProductList = new ArrayList<>();  // 주문할 상품 리스트
+
+        for (OrderDto dto : orderDtoList) {
+            Long productId = dto.getProductId() ;
+            Product product = productRepository.findById(productId).orElseThrow(EntityNotFoundException::new) ;
+            int count = dto.getCount() ;
+            OrderProduct orderProduct = OrderProduct.createOrderProduct(product, count) ;
+            orderProductList.add(orderProduct);
+
+        }
+
+        Order order = Order.createOrder(member, orderProductList) ;
+        orderRepository.save(order) ;
+
+        return order.getId() ;
 
     }
 }

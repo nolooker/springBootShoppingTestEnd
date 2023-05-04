@@ -114,6 +114,4 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
         return productStatus == null ? null : QProduct.product.productStatus.eq(productStatus) ;
     }
 
-
-
 }

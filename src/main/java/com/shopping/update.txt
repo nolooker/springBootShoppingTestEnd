@@ -156,3 +156,12 @@ MainController
 
 CartProductRepository 확인하기
 CartService 확인하기
+
+
+#게시물 만들기
+
+Board
+BoardMapperInterface
+BoardService
+BoardController
+boardList.html
